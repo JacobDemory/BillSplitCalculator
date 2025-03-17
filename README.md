@@ -3,10 +3,10 @@
 Ever want to split a bill with your friends at dinner and calculate it easily? Well now you can with this simple program that calculates how much each person needs to pay, including the tip!
 
 ### <ins>How to run:</ins>
-``python3 bill_split.py``
+``python3 bill_split.py``<br><br>
 
 
-### <ins>Example Run</ins>
+### <ins>Example Output</ins>
 === Bill Split Calculator ===<br>
 Enter the bill amount ($): 50<br>
 Enter tip percentage (%): 15<br>

@@ -1,7 +1,0 @@
-Bill Breakdown
-Bill Amount: $50.00
-Tip (15.0%): $7.50
-Total (with tip): $57.50
-Jacob: $20.00
-Jay: $18.75
-Nick: $18.75

@@ -63,7 +63,7 @@ def calculate_bill_split():
             break
         print("Please enter 'e' or 'u'!")
 
-    # Handle split logic
+    # Handle split logic (keep full precision)
     breakdown = []
     remaining = total_price
     if split_type == "u":
@@ -109,30 +109,43 @@ def calculate_bill_split():
             break
         print("Please enter 1, 2, 3, or press Enter for default!")
 
-    # Apply rounding
+    # Apply rounding and ensure total matches, with conditional adjustment note
     rounded_breakdown = []
-    for name, amount, _ in breakdown:
-        if rounding_choice == "3":
-            rounded_amount = math.ceil(amount)
-            note = " (rounded up to nearest dollar)"
-        elif rounding_choice == "2":
-            rounded_amount = round(amount, 2)
-            note = " (rounded to nearest cent)"
-        else:
-            rounded_amount = amount
-            note = ""
-        rounded_breakdown.append((name, rounded_amount, note))
+    running_total = 0.0
+    for i, (name, amount, _) in enumerate(breakdown):
+        if i < len(breakdown) - 1:  # All but last person
+            if rounding_choice == "3":
+                rounded_amount = math.ceil(amount)
+                note = " (rounded up to nearest dollar)"
+            elif rounding_choice == "2":
+                rounded_amount = round(amount, 2)
+                note = " (rounded to nearest cent)"
+            else:  # Option 1 or empty (no rounding, but still 2 decimals for display)
+                rounded_amount = round(amount, 2)
+                note = ""
+            rounded_breakdown.append((name, rounded_amount, note))
+            running_total += rounded_amount
+        else:  # Last person
+            expected_amount = amount  # What it would be without adjustment
+            rounded_amount = total_price - running_total
+            if rounding_choice == "3":
+                rounded_amount = math.ceil(rounded_amount)
+                note = " (adjusted and rounded up to nearest dollar)" if abs(rounded_amount - math.ceil(expected_amount)) > 0.01 else " (rounded up to nearest dollar)"
+            elif rounding_choice == "2" or rounding_choice == "":
+                rounded_amount = round(total_price - running_total, 2)
+                note = " (adjusted to match total)" if abs(rounded_amount - round(expected_amount, 2)) > 0.01 else "" if rounding_choice == "" else " (rounded to nearest cent)"
+            else:  # Shouldn’t hit this
+                rounded_amount = total_price - running_total
+                note = " (adjusted to match total)" if abs(rounded_amount - expected_amount) > 0.01 else ""
+            rounded_breakdown.append((name, rounded_amount, note))
 
     # Display results
     print("\n--- Bill Breakdown ---")
     print(f"Bill Amount: ${bill_amount:.2f}")
     print(f"Tip ({tip_percent}%): ${tip_amount:.2f}")
     print(f"Total (with tip): ${total_price:.2f}")
-    total_assigned = sum(amount for _, amount, _ in rounded_breakdown)
     for name, amount, note in rounded_breakdown:
         print(f"{name}: ${amount:.2f}{note}")
-    if abs(total_assigned - total_price) > 0.01:  # Allow small float errors
-        print(f"Warning: Total assigned (${total_assigned:.2f}) does not match total (${total_price:.2f})!")
 
     # Save to file option
     while True:
@@ -153,8 +166,6 @@ def calculate_bill_split():
             f.write(f"Total (with tip): ${total_price:.2f}\n")
             for name, amount, note in rounded_breakdown:
                 f.write(f"{name}: ${amount:.2f}{note}\n")
-            if abs(total_assigned - total_price) > 0.01:
-                f.write(f"Warning: Total assigned (${total_assigned:.2f}) does not match total (${total_price:.2f})!\n")
         print(f"Saved to {filename}")
 
 def main():

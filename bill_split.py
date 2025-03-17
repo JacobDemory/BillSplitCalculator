@@ -1,12 +1,12 @@
 def calculate_bill_split():
-    """Calculate and display bill split with tip among multiple people"""
+    """Calculate and display bill split with tip among multiple people."""
     print("=== Bill Split Calculator ===")
 
     # Using a try-except block for error handling
     try:
         # Get user inputs with clear prompts
         bill_amount = float(input("Enter the bill amount ($): "))
-        tip_percent = (float(input("Enter tip percentage (%): ")))
+        tip_percent = float(input("Enter tip percentage (%): "))
         num_people = int(input("Enter number of people to split among: "))
 
         # Validate inputs
@@ -20,12 +20,31 @@ def calculate_bill_split():
         total_price = bill_amount + tip_amount
         amount_per_person = total_price / num_people
 
-        # Display results with proper formatting (2 decimal places for money)
+        # Ask about rounding preference
+        print("\nRound the per-person amount?")
+        print("1: No rounding (default)")
+        print("2: Round to nearest cent (2 decimal places)")
+        print("3: Round to nearest dollar")
+        rounding_choice = input("Enter choice (1-3): ").strip()
+
+        # Apply rounding based on user choice
+        if rounding_choice == "3":
+            amount_per_person = round(amount_per_person)  # Nearest dollar
+            rounding_note = " (rounded to nearest dollar)"
+        elif rounding_choice == "2":
+            amount_per_person = round(amount_per_person, 2)  # Nearest cent
+            rounding_note = " (rounded to nearest cent)"
+        else:
+            amount_per_person = amount_per_person  # No rounding (keep as is)
+            rounding_note = ""
+
+        # Display results with proper formatting
         print("\n--- Bill Breakdown ---")
         print(f"Bill Amount: ${bill_amount:.2f}")
         print(f"Tip ({tip_percent}%): ${tip_amount:.2f}")
         print(f"Total (with tip): ${total_price:.2f}")
-        print(f"Amount per person: ${amount_per_person:.2f} ({num_people} people)")
+        print(f"Amount per person: ${amount_per_person:.2f}{rounding_note} ({num_people} people)")
+
 
     except ValueError as e:
         # Handle invalid inputs gracefully

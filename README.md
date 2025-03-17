@@ -7,7 +7,7 @@ A simple yet powerful Python tool to split restaurant bills among friends, inclu
 ## Features
 - Calculates the total bill with tip included
 - Splits the amount evenly among a specified number of people
-- **Optional rounding of per-person amounts (to nearest dollar or cent)**
+- **Optional rounding of per-person amounts (up to nearest dollar or cent)**
 - Handles invalid inputs with clear error messages
 - Offers a replay option to calculate multiple bills in one session
 - Clean, formatted output for easy reading

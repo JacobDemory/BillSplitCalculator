@@ -1,3 +1,5 @@
+import math
+
 def calculate_bill_split():
     """Calculate and display bill split with tip among multiple people."""
     print("=== Bill Split Calculator ===")
@@ -24,13 +26,13 @@ def calculate_bill_split():
         print("\nRound the per-person amount?")
         print("1: No rounding (default)")
         print("2: Round to nearest cent (2 decimal places)")
-        print("3: Round to nearest dollar")
+        print("3: Round up to nearest dollar")
         rounding_choice = input("Enter choice (1-3): ").strip()
 
         # Apply rounding based on user choice
         if rounding_choice == "3":
-            amount_per_person = round(amount_per_person)  # Nearest dollar
-            rounding_note = " (rounded to nearest dollar)"
+            amount_per_person = math.ceil(amount_per_person)  # Round up to nearest dollar
+            rounding_note = " (rounded up to nearest dollar)"
         elif rounding_choice == "2":
             amount_per_person = round(amount_per_person, 2)  # Nearest cent
             rounding_note = " (rounded to nearest cent)"
@@ -44,7 +46,6 @@ def calculate_bill_split():
         print(f"Tip ({tip_percent}%): ${tip_amount:.2f}")
         print(f"Total (with tip): ${total_price:.2f}")
         print(f"Amount per person: ${amount_per_person:.2f}{rounding_note} ({num_people} people)")
-
 
     except ValueError as e:
         # Handle invalid inputs gracefully

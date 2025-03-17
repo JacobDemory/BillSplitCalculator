@@ -3,7 +3,7 @@
 Ever want to split a bill with your friends at dinner and calculate it easily? Well now you can with this simple program that calculates how much each person needs to pay, including the tip!
 
 ### <ins>How to run:</ins>
-python3 bill_split.py
+``python3 bill_split.py``
 
 
 ### <ins>Example Run</ins>

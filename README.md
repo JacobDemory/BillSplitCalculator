@@ -9,10 +9,11 @@ Latest change is in **bold**
 - Calculates the total bill with tip included
 - Supports **even splitting** or **uneven splitting with custom amounts for some, remainder split evenly**
 - Tracks amounts owed by **named individuals**
-- Optional rounding of per-person amounts (no rounding, nearest cent, or up to nearest dollar)
+- Optional rounding of per-person amounts (no rounding with 2 decimal places, or up to nearest dollar)
 - **Adjusts the last person’s amount to ensure the total matches the bill, with adjustment noted only when necessary**
 - Saves bill breakdowns to a text file
 - Reprompts for input on errors instead of crashing, making it typo-friendly
+- Gracefully exits on interrupt (Ctrl+C) with a farewell message
 - Offers a replay option to calculate multiple bills in one session
 - Clean, formatted output for easy reading
 
@@ -72,10 +73,10 @@ Enter the bill amount (\$):<br>
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/bill-splitting-calculator.git
+   git clone https://github.com/JacobDemory/BillSplitCalculator.git
 2. Navigate to the directory:
    ```bash
-   cd bill-splitting-calculator
+   cd BillSplitCalculator
 3. Run the script as described above.
 
 ## Contributing
